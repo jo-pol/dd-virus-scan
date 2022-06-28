@@ -1,0 +1,13 @@
+[Unit]
+Description=Dd Workflow Step Virus Scan Service
+
+[Service]
+ExecStart=/opt/dans.knaw.nl/dd-workflow-step-virus-scan/bin/dd-workflow-step-virus-scan server /etc/opt/dans.knaw.nl/dd-workflow-step-virus-scan/config.yml
+# Java returns 143 even if the SIGTERM was handled correctly.
+SuccessExitStatus=143
+
+User=dd-workflow-step-virus-scan
+Group=dd-workflow-step-virus-scan
+
+[Install]
+WantedBy=multi-user.target
