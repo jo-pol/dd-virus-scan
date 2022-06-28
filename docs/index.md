@@ -1,8 +1,7 @@
 dd-workflow-step-virus-scan
-===========
+===========================
 
-<!-- Remove this comment and extend the descriptions below -->
-
+Workflow step for scanning datasets for virus before publishing
 
 SYNOPSIS
 --------
@@ -13,7 +12,15 @@ SYNOPSIS
 DESCRIPTION
 -----------
 
-Workflow step for scanning datasets for virus before publication
+Workflow step for scanning datasets for virus before publication. The service uses the `clamd` daemon for the actual scanning.   
+
+
+
+
+
+### References
+
+* https://linux.die.net/man/8/clamd 
 
 
 ARGUMENTS
