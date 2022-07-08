@@ -16,39 +16,36 @@
 package nl.knaw.dans.virusscan.core.health;
 
 import com.codahale.metrics.health.HealthCheck;
-import nl.knaw.dans.virusscan.core.config.ClamdConfig;
+import nl.knaw.dans.virusscan.core.service.ClamdService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 
 public class ClamdHealthCheck extends HealthCheck {
     private static final Logger log = LoggerFactory.getLogger(ClamdHealthCheck.class);
 
-    private final ClamdConfig clamdConfig;
+    private final ClamdService clamdService;
 
-    public ClamdHealthCheck(ClamdConfig clamdConfig) {
-        this.clamdConfig = clamdConfig;
+    public ClamdHealthCheck(ClamdService clamdService) {
+        this.clamdService = clamdService;
     }
 
     @Override
     protected Result check() {
         try {
-            try (var socket = new Socket(clamdConfig.getHost(), clamdConfig.getPort())) {
-                socket.getOutputStream().write("PING".getBytes(StandardCharsets.UTF_8));
-                var result = new String(socket.getInputStream().readAllBytes());
+            var result = clamdService.ping();
+            log.trace("Result from ClamAV PING request: {}", result);
 
-                if ("PONG\n".equalsIgnoreCase(result)) {
-                    return Result.healthy();
-                }
-                else {
-                    throw new IOException(String.format("Unexpected output from ClamAV: %s", result));
-                }
+            if ("PONG\n".equalsIgnoreCase(result)) {
+                return Result.healthy();
+            }
+            else {
+                throw new IOException(String.format("Unexpected output from ClamAV: %s", result));
             }
         }
         catch (IOException e) {
+            log.error("IO error occurred while communicating with ClamAV", e);
             return Result.builder()
                 .withMessage(e.getMessage())
                 .unhealthy(e)

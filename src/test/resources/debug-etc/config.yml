@@ -1,16 +1,3 @@
-
-server:
-  applicationContextPath: /
-  adminContextPath: /
-  applicationConnectors:
-    - type: http
-      # Replace with port number unique for this service
-      port: 20000
-  adminConnectors:
-    - type: http
-      # Replace with port number unique for this service
-      port: 20001
-
 #
 # See https://www.dropwizard.io/en/latest/manual/configuration.html#logging
 #
@@ -40,3 +27,80 @@ health:
         downtimeInterval: 10s
         failureAttempts: 3
         successAttempts: 1
+
+#
+# dd-workflow-step-virus-scan configuration file
+#
+server:
+  applicationContextPath: /
+  adminContextPath: /
+  applicationConnectors:
+    - type: http
+      port: 20325
+  adminConnectors:
+    - type: http
+      port: 20326
+
+virusscanner:
+  # Location of the clamd daemon
+  clamd:
+    host: localhost
+    port: 3310
+    # chunk size in bytes
+    chunksize: 8388608
+    overlapsize: 524288
+    buffersize: 8096
+  # Pattern to match a positive. The must be one group which will be used in the resume message
+  resultPositivePattern: '^stream: (.*)$'
+  # If clamscan's response matches this pattern, the file is declared OK
+  resultNegativePattern: '^stream: OK$'
+
+  #
+  # The message that will be sent back to Dataverse when one or more virus are found. The %1 will be replaced with a comma-separated list of (file, message) pairs, e.g.,
+  #
+  # 'Virus found in dataset: subdir/eicar.com.txt -> Win.Test.EICAR_HDB-1 FOUND, eicarcom2.zip -> Win.Test.EICAR_HDB-1 FOUND
+  #
+  # The message will be taken from matches of resultPositivePattern
+  #
+  resultPositiveMessageTemplate: 'Virus found in dataset: %1'
+
+  #
+  # Configures the worker threads that will scan datasets for virus
+  #
+  scanDatasetTaskQueue:
+    nameFormat: "scan-dataset-worker-%d"
+
+    maxQueueSize: 4
+    # Number of threads will be increased when maxQueueSize is exceeded.
+    minThreads: 2
+    # No more than maxThreads will be created though
+    maxThreads: 10
+    # Threads will die after 60 seconds of idleness
+    keepAliveTime: 60 seconds
+
+  resumeTasks:
+    maxTries: 10
+    waitBetweenTries: PT3S
+
+  #
+  # Configures the worker threads that will resume the workflow.
+  #
+  resumeDatasetTaskQueue:
+    nameFormat: "resume-dataset-worker-%d"
+
+    maxQueueSize: 4
+    # Number of threads will be increased when maxQueueSize is exceeded.
+    minThreads: 2
+    # No more than maxThreads will be created though
+    maxThreads: 10
+    # Threads will die after 60 seconds of idleness
+    keepAliveTime: 60 seconds
+
+#
+# The Dataverse instance that the invocations will come from. It is currently not possible to handle
+# requests from multiple Dataverse instances.
+#
+dataverse:
+  apiToken: "09286b45-08ee-43bd-8867-057788afd7bd"
+  baseUrl: "http://localhost:8080/"
+

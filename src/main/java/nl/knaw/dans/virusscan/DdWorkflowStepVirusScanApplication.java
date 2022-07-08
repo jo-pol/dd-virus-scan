@@ -71,7 +71,7 @@ public class DdWorkflowStepVirusScanApplication extends Application<DdWorkflowSt
 
         environment.jersey().register(resource);
 
-        environment.healthChecks().register("Clamd", new ClamdHealthCheck(configuration.getVirusscanner().getClamd()));
+        environment.healthChecks().register("Clamd", new ClamdHealthCheck(clamdService));
         environment.healthChecks().register("Dataverse", new DataverseHealthCheck(dataverseApiService));
     }
 }

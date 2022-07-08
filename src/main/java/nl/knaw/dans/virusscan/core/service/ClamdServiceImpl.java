@@ -44,6 +44,14 @@ public class ClamdServiceImpl implements ClamdService {
         return processStreamInBatches(inputStream);
     }
 
+    @Override
+    public String ping() throws IOException {
+        try (var socket = getConnection()) {
+            socket.getOutputStream().write("PING".getBytes(StandardCharsets.UTF_8));
+            return new String(socket.getInputStream().readAllBytes());
+        }
+    }
+
     void writeChunk(OutputStream outputStream, byte[] buffer, int bufferSize) throws IOException {
         // create a 4 byte sequence indicating the size of the payload (in network byte order)
         var header = ByteBuffer.allocate(4).order(ByteOrder.BIG_ENDIAN).putInt(bufferSize).array();
