@@ -23,6 +23,7 @@ public interface VirusScanner {
 
     /**
      * Scans an InputStream for virusses using the clamav package
+     *
      * @param inputStream the stream to analyze
      * @return a list of positive matches in the stream
      * @throws IOException throw if some exception happens with reading from the input stream or writing to clamav

@@ -36,7 +36,7 @@ public class ClamdConfig {
     // If a file is bigger than the chunksize, it is split up and sent as multiple files
     // A sensible value would be around 10MB
     // If it is bigger than the ClamAV value `StreamMaxLength` it will cause errors
-    @Min(1024*1024)
+    @Min(1024 * 1024)
     private int chunksize;
 
     // Because files are split up, it might be split right in the middle of a possible match.

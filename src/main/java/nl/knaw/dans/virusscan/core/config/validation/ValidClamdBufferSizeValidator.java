@@ -29,10 +29,6 @@ public class ValidClamdBufferSizeValidator implements ConstraintValidator<ValidC
             return false;
         }
 
-        if (clamdConfig.getOverlapsize() / 2 < clamdConfig.getBuffersize()) {
-            return false;
-        }
-
-        return true;
+        return clamdConfig.getOverlapsize() / 2 >= clamdConfig.getBuffersize();
     }
 }
