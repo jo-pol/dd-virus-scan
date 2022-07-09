@@ -5,5 +5,6 @@ dd-workflow-step-virus-scan
 
 For documentation see: https://dans-knaw.github.io/dd-workflow-step-virus-scan
 
+To run locally, start up clam av like this:
 
 docker run -p 3310:3310 -v $(pwd)/clamd.conf:/etc/clamav/clamd.conf mkodockx/docker-clamav:alpine
