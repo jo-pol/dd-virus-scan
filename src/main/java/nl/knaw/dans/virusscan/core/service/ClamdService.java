@@ -22,4 +22,6 @@ import java.util.Set;
 public interface ClamdService {
 
     Set<String> scanStream(InputStream inputStream) throws IOException;
+
+    String ping() throws IOException;
 }

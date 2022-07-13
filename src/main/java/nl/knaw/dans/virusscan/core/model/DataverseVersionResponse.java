@@ -19,6 +19,14 @@ public class DataverseVersionResponse {
     private String status;
     private DataverseVersion data;
 
+    public DataverseVersionResponse() {
+
+    }
+
+    public DataverseVersionResponse(String status) {
+        this.status = status;
+    }
+
     public String getStatus() {
         return status;
     }

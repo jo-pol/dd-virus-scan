@@ -16,7 +16,6 @@
 package nl.knaw.dans.virusscan.core.service;
 
 import nl.knaw.dans.virusscan.core.config.ClamdConfig;
-import nl.knaw.dans.virusscan.core.config.VirusScannerConfig;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -27,17 +26,17 @@ import java.net.Socket;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ClamdServiceImplTest {
 
     @Test
     void scanStream() throws IOException {
 
-        var config = new VirusScannerConfig();
-        config.setClamd(new ClamdConfig());
-        config.getClamd().setChunksize(100);
-        config.getClamd().setBuffersize(20);
-        config.getClamd().setOverlapsize(20);
+        var config = new ClamdConfig();
+        config.setChunksize(100);
+        config.setBuffersize(20);
+        config.setOverlapsize(20);
 
         var inputStream = new ByteArrayInputStream(
             "Nesciunt recusandae optio eum veniam et. Magni repellat omnis aut. Beatae enim provident eos dolorum officia ratione. Magnam in impedit sit facilis.".getBytes());
@@ -46,7 +45,7 @@ class ClamdServiceImplTest {
 
         var socket = Mockito.mock(Socket.class);
 
-        var service = new ClamdServiceImpl(config.getClamd());
+        var service = new ClamdServiceImpl(config);
         var spyService = Mockito.spy(service);
         Mockito.when(socket.getInputStream()).thenReturn(socketInputStream);
         Mockito.when(socket.getOutputStream()).thenReturn(outputStream);
@@ -62,5 +61,50 @@ class ClamdServiceImplTest {
         assertEquals("zINSTREAM\0", new String(Arrays.copyOfRange(output, 134, 134 + 10)));
         // verify a part of the first stream is sent again in the second stream
         assertEquals("rovident eos dolorum", new String(Arrays.copyOfRange(output, 148, 168)));
+    }
+
+    @Test
+    void scanStreamWithException() throws IOException {
+        var config = new ClamdConfig();
+        config.setChunksize(100);
+        config.setBuffersize(20);
+        config.setOverlapsize(20);
+
+        var inputStream = new ByteArrayInputStream(
+            "random content that is irrelevant".getBytes());
+        var outputStream = new ByteArrayOutputStream();
+        var socketInputStream = new ByteArrayInputStream("Some error occurred\n".getBytes());
+
+        var socket = Mockito.mock(Socket.class);
+
+        var service = new ClamdServiceImpl(config);
+        var spyService = Mockito.spy(service);
+        Mockito.when(socket.getInputStream()).thenReturn(socketInputStream);
+        Mockito.when(socket.getOutputStream()).thenReturn(outputStream);
+        Mockito.doReturn(socket).when(spyService).getConnection();
+
+        assertThrows(IOException.class, () -> spyService.processStreamInBatches(inputStream));
+    }
+
+    @Test
+    void pingPong() throws IOException {
+        var config = new ClamdConfig();
+        config.setChunksize(100);
+        config.setBuffersize(20);
+        config.setOverlapsize(20);
+
+        var socket = Mockito.mock(Socket.class);
+
+        var service = new ClamdServiceImpl(config);
+        var spyService = Mockito.spy(service);
+
+        var outputStream = new ByteArrayOutputStream();
+        var socketInputStream = new ByteArrayInputStream("PONG\n".getBytes());
+        Mockito.when(socket.getInputStream()).thenReturn(socketInputStream);
+        Mockito.when(socket.getOutputStream()).thenReturn(outputStream);
+        Mockito.doReturn(socket).when(spyService).getConnection();
+
+        var result = spyService.ping();
+        assertEquals("PONG\n", result);
     }
 }
