@@ -27,7 +27,7 @@
 
     <groupId>nl.knaw.dans</groupId>
     <artifactId>dd-workflow-step-virus-scan</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1-SNAPSHOT</version>
 
     <name>Dd Workflow Step Virus Scan</name>
     <url>https://github.com/DANS-KNAW/dd-workflow-step-virus-scan</url>
@@ -40,7 +40,7 @@
 
     <scm>
         <developerConnection>scm:git:https://github.com/DANS-KNAW/dd-workflow-step-virus-scan</developerConnection>
-        <tag>v0.1.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <dependencies>
