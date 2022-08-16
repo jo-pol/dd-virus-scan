@@ -22,14 +22,14 @@
     <parent>
         <artifactId>dans-dropwizard-project</artifactId>
         <groupId>nl.knaw.dans.shared</groupId>
-        <version>7.2.0</version>
+        <version>7.4.0</version>
     </parent>
 
     <groupId>nl.knaw.dans</groupId>
     <artifactId>dd-workflow-step-virus-scan</artifactId>
     <version>0.2.1-SNAPSHOT</version>
 
-    <name>Dd Workflow Step Virus Scan</name>
+    <name>DD Workflow Step Virus Scan</name>
     <url>https://github.com/DANS-KNAW/dd-workflow-step-virus-scan</url>
     <description>Workflow step for scanning datasets for virus before publication</description>
     <inceptionYear>2022</inceptionYear>
@@ -52,17 +52,10 @@
         <dependency>
             <groupId>nl.knaw.dans</groupId>
             <artifactId>dans-java-utils</artifactId>
-            <version>0.0.1</version>
         </dependency>
         <dependency>
             <groupId>nl.knaw.dans</groupId>
             <artifactId>dans-dataverse-client-lib</artifactId>
-            <version>0.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.dropwizard.modules</groupId>
-            <artifactId>dropwizard-health</artifactId>
-            <version>1.7.2</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -83,12 +76,6 @@
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-testing</artifactId>
             <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>junit</groupId>
-                    <artifactId>junit</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
 

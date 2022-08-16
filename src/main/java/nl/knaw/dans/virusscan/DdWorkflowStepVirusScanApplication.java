@@ -18,17 +18,14 @@ package nl.knaw.dans.virusscan;
 
 import io.dropwizard.Application;
 import io.dropwizard.client.JerseyClientBuilder;
-import io.dropwizard.health.conf.HealthConfiguration;
-import io.dropwizard.health.core.HealthCheckBundle;
-import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import nl.knaw.dans.virusscan.core.health.ClamdHealthCheck;
-import nl.knaw.dans.virusscan.core.health.DataverseHealthCheck;
 import nl.knaw.dans.virusscan.core.service.ClamdServiceImpl;
 import nl.knaw.dans.virusscan.core.service.DatasetResumeTaskFactoryImpl;
 import nl.knaw.dans.virusscan.core.service.DatasetScanTaskFactoryImpl;
 import nl.knaw.dans.virusscan.core.service.DataverseApiServiceImpl;
 import nl.knaw.dans.virusscan.core.service.VirusScannerImpl;
+import nl.knaw.dans.virusscan.health.ClamdHealthCheck;
+import nl.knaw.dans.virusscan.health.DataverseHealthCheck;
 import nl.knaw.dans.virusscan.resource.InvokeResourceImpl;
 
 public class DdWorkflowStepVirusScanApplication extends Application<DdWorkflowStepVirusScanConfiguration> {
@@ -40,17 +37,6 @@ public class DdWorkflowStepVirusScanApplication extends Application<DdWorkflowSt
     @Override
     public String getName() {
         return "Dd Workflow Step Virus Scan";
-    }
-
-    @Override
-    public void initialize(final Bootstrap<DdWorkflowStepVirusScanConfiguration> bootstrap) {
-        bootstrap.addBundle(new HealthCheckBundle<>() {
-
-            @Override
-            protected HealthConfiguration getHealthConfiguration(final DdWorkflowStepVirusScanConfiguration configuration) {
-                return configuration.getHealthConfiguration();
-            }
-        });
     }
 
     @Override

@@ -19,7 +19,6 @@ package nl.knaw.dans.virusscan;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
 import io.dropwizard.client.JerseyClientConfiguration;
-import io.dropwizard.health.conf.HealthConfiguration;
 import nl.knaw.dans.virusscan.core.config.DataverseConfig;
 import nl.knaw.dans.virusscan.core.config.VirusScannerConfig;
 
@@ -38,18 +37,6 @@ public class DdWorkflowStepVirusScanConfiguration extends Configuration {
     @Valid
     @NotNull
     private VirusScannerConfig virusscanner;
-    @Valid
-    @NotNull
-    @JsonProperty("health")
-    private HealthConfiguration healthConfiguration = new HealthConfiguration();
-
-    public HealthConfiguration getHealthConfiguration() {
-        return healthConfiguration;
-    }
-
-    public void setHealthConfiguration(HealthConfiguration healthConfiguration) {
-        this.healthConfiguration = healthConfiguration;
-    }
 
     public JerseyClientConfiguration getJerseyClient() {
         return jerseyClient;
