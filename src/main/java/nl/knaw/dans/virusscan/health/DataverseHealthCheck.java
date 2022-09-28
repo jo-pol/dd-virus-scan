@@ -16,6 +16,7 @@
 package nl.knaw.dans.virusscan.health;
 
 import com.codahale.metrics.health.HealthCheck;
+import nl.knaw.dans.lib.dataverse.DataverseException;
 import nl.knaw.dans.virusscan.core.service.DataverseApiService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,16 +35,11 @@ public class DataverseHealthCheck extends HealthCheck {
     @Override
     protected Result check() {
         try {
-            var info = dataverseApiService.getDataverseInfo();
-
-            if (info.getStatus().equalsIgnoreCase("OK")) {
-                return Result.healthy();
-            }
-            else {
-                throw new IOException(String.format("Version request returned incorrect status '%s'", info.getStatus()));
-            }
+            log.trace("Checking dataverse status");
+            dataverseApiService.checkConnection();
+            return Result.healthy();
         }
-        catch (IOException e) {
+        catch (IOException | DataverseException e) {
             return Result.builder()
                 .withMessage(e.getMessage())
                 .unhealthy(e)

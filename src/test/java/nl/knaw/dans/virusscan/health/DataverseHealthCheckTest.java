@@ -15,7 +15,7 @@
  */
 package nl.knaw.dans.virusscan.health;
 
-import nl.knaw.dans.virusscan.core.model.DataverseVersionResponse;
+import nl.knaw.dans.lib.dataverse.DataverseException;
 import nl.knaw.dans.virusscan.core.service.DataverseApiService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -28,21 +28,20 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class DataverseHealthCheckTest {
 
     @Test
-    void checkSuccessful() throws IOException {
+    void checkSuccessful() throws Exception {
 
         var service = Mockito.mock(DataverseApiService.class);
-        Mockito.when(service.getDataverseInfo()).thenReturn(new DataverseVersionResponse("OK"));
-
         var result = new DataverseHealthCheck(service).check();
 
         assertTrue(result.isHealthy());
     }
 
     @Test
-    void checkUnsuccessful() throws IOException {
+    void checkUnsuccessful() throws Exception {
 
         var service = Mockito.mock(DataverseApiService.class);
-        Mockito.when(service.getDataverseInfo()).thenReturn(new DataverseVersionResponse("NOT OK"));
+        Mockito.doThrow(new DataverseException(500, "Broken", null))
+            .when(service).checkConnection();
 
         var result = new DataverseHealthCheck(service).check();
 
@@ -50,10 +49,11 @@ class DataverseHealthCheckTest {
     }
 
     @Test
-    void checkIOExceptionsBeingCaught() throws IOException {
+    void checkIOExceptionsBeingCaught() throws Exception {
 
         var service = Mockito.mock(DataverseApiService.class);
-        Mockito.doThrow(IOException.class).when(service).getDataverseInfo();
+        Mockito.doThrow(new IOException("io error"))
+            .when(service).checkConnection();
 
         var result = new DataverseHealthCheck(service).check();
 
