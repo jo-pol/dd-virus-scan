@@ -21,7 +21,6 @@ import nl.knaw.dans.lib.dataverse.DataverseException;
 import nl.knaw.dans.lib.dataverse.model.file.FileMeta;
 import nl.knaw.dans.lib.dataverse.model.workflow.ResumeMessage;
 import nl.knaw.dans.virusscan.core.config.DataverseConfig;
-import nl.knaw.dans.virusscan.core.model.DataverseVersionResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -83,19 +82,8 @@ public class DataverseApiServiceImpl implements DataverseApiService {
     }
 
     @Override
-    public DataverseVersionResponse getDataverseInfo() throws IOException {
-        var uri = String.format("%s/api/info/version", dataverseConfig.getBaseUrl());
-
-        try {
-            log.trace("Getting dataverse info from API");
-            return httpClient.target(URI.create(uri))
-                .request()
-                .header("X-Dataverse-key", dataverseConfig.getApiToken())
-                .get(DataverseVersionResponse.class);
-        }
-        catch (Exception e) {
-            throw new IOException("Error requesting dataverse version", e);
-        }
+    public void checkConnection() throws IOException, DataverseException {
+        this.getDataverseClient().checkConnection();
     }
 
 }
