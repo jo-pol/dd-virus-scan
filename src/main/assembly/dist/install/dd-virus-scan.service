@@ -1,5 +1,5 @@
 [Unit]
-Description=Dd Workflow Step Virus Scan Service
+Description=Dd Virus Scan Service
 
 [Service]
 ExecStart=/opt/dans.knaw.nl/dd-virus-scan/bin/dd-virus-scan server /etc/opt/dans.knaw.nl/dd-virus-scan/config.yml

@@ -36,7 +36,7 @@ public class DdVirusScanApplication extends Application<DdVirusScanConfiguration
 
     @Override
     public String getName() {
-        return "Dd Workflow Step Virus Scan";
+        return "Dd Virus Scan";
     }
 
     @Override
