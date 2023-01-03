@@ -28,10 +28,10 @@ import nl.knaw.dans.virusscan.health.ClamdHealthCheck;
 import nl.knaw.dans.virusscan.health.DataverseHealthCheck;
 import nl.knaw.dans.virusscan.resource.InvokeResourceImpl;
 
-public class DdWorkflowStepVirusScanApplication extends Application<DdWorkflowStepVirusScanConfiguration> {
+public class DdVirusScanApplication extends Application<DdVirusScanConfiguration> {
 
     public static void main(final String[] args) throws Exception {
-        new DdWorkflowStepVirusScanApplication().run(args);
+        new DdVirusScanApplication().run(args);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class DdWorkflowStepVirusScanApplication extends Application<DdWorkflowSt
     }
 
     @Override
-    public void run(final DdWorkflowStepVirusScanConfiguration configuration, final Environment environment) {
+    public void run(final DdVirusScanConfiguration configuration, final Environment environment) {
         final var client = new JerseyClientBuilder(environment).using(configuration.getJerseyClientConfiguration())
             .build(getName());
 

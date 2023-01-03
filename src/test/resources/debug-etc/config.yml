@@ -12,7 +12,7 @@ logging:
 
     - type: file
       archive: false
-      currentLogFilename: data/dd-workflow-step-virus-scan.log
+      currentLogFilename: data/dd-virus-scan.log
 
 health:
   delayedShutdownHandlerEnabled: false
@@ -28,9 +28,6 @@ health:
         failureAttempts: 3
         successAttempts: 1
 
-#
-# dd-workflow-step-virus-scan configuration file
-#
 server:
   applicationContextPath: /
   adminContextPath: /

@@ -18,7 +18,7 @@
 #include <service.sh>
 
 NUMBER_OF_INSTALLATIONS=$1
-MODULE_NAME=dd-workflow-step-virus-scan
+MODULE_NAME=dd-virus-scan
 INSTALL_DIR=/opt/dans.knaw.nl/$MODULE_NAME
 PHASE="POST-REMOVE"
 

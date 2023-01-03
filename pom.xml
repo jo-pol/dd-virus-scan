@@ -25,16 +25,16 @@
         <version>0.11.0</version>
     </parent>
 
-    <artifactId>dd-workflow-step-virus-scan</artifactId>
+    <artifactId>dd-virus-scan</artifactId>
     <version>0.4.1-SNAPSHOT</version>
 
-    <name>DD Workflow Step Virus Scan</name>
-    <url>https://github.com/DANS-KNAW/dd-workflow-step-virus-scan</url>
-    <description>Workflow step for scanning datasets for virus before publication</description>
+    <name>DD Virus Scan</name>
+    <url>https://github.com/DANS-KNAW/dd-virus-scan</url>
+    <description>Service for scanning Dataverse datasets for virus</description>
     <inceptionYear>2022</inceptionYear>
 
     <properties>
-        <main-class>nl.knaw.dans.virusscan.DdWorkflowStepVirusScanApplication</main-class>
+        <main-class>nl.knaw.dans.virusscan.DdVirusScanApplication</main-class>
     </properties>
 
     <scm>

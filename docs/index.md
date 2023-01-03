@@ -1,17 +1,17 @@
-dd-workflow-step-virus-scan
+dd-virus-scan
 ===========================
 
-Workflow step for scanning datasets for virus before publishing
+Service for scanning Dataverse datasets for virus
 
 SYNOPSIS
 --------
 
-    dd-workflow-step-virus-scan { server | check }
+    dd-virus-scan { server | check }
 
 DESCRIPTION
 -----------
 
-Workflow step for scanning datasets for virus before publication. The service uses the `clamd` daemon for the actual scanning. The data files of the dataset
+Service for scanning Dataverse datasets for virus. The service uses the `clamd` daemon for the actual scanning. The data files of the dataset
 will be streamed through the `clamd` deamon one by one. If no virus is found the resume status will be _"Success"_, otherwise _"Failure"_ with in the message
 the instantiated `resultPostiveMessageTemplate`. See the comments in the `config.yml` for details.
 
@@ -19,7 +19,7 @@ The service has the following thread pools:
 
 * Workers for incoming HTTP requests from Dataverse. These will schedule scan tasks.
 * Scan task workers. These will loop over all the files in the targeted dataset and stream them through `scand`, gathering the results. The overall result will
-  be determined an resumption of the workflow will the be scheduled as a resume task.
+  be determined a resumption of the workflow will be scheduled as a resume task.
 * Resume task workers. These will try to resume the workflow. This will be tried a configured number of times because Dataverse has known synchronization issues
   in its workflow framework.
 

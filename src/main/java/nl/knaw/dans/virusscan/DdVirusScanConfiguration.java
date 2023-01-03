@@ -25,7 +25,7 @@ import nl.knaw.dans.virusscan.core.config.VirusScannerConfig;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-public class DdWorkflowStepVirusScanConfiguration extends Configuration {
+public class DdVirusScanConfiguration extends Configuration {
 
     @Valid
     @NotNull

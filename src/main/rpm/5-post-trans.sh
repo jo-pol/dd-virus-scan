@@ -17,7 +17,7 @@
 
 #include <service.sh>
 
-MODULE_NAME=dd-workflow-step-virus-scan
+MODULE_NAME=dd-virus-scan
 PHASE="POST-TRANS"
 
 echo "$PHASE: START"
