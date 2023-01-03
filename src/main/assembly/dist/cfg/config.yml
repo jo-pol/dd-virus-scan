@@ -1,5 +1,5 @@
 #
-# dd-workflow-step-virus-scan configuration file
+# dd-virus-scan configuration file
 #
 server:
   applicationContextPath: /
@@ -85,7 +85,7 @@ logging:
     - type: file
       archive: false
       timeZone: system
-      currentLogFilename: /var/opt/dans.knaw.nl/log/dd-workflow-step-virus-scan/dd-workflow-step-virus-scan.log
+      currentLogFilename: /var/opt/dans.knaw.nl/log/dd-virus-scan/dd-virus-scan.log
 
 health:
   delayedShutdownHandlerEnabled: false

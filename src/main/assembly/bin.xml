@@ -39,7 +39,7 @@
             <directory>${project.basedir}/src/main/assembly/dist/bin</directory>
             <outputDirectory>bin</outputDirectory>
             <includes>
-                <include>dd-workflow-step-virus-scan</include>
+                <include>dd-virus-scan</include>
             </includes>
             <fileMode>0755</fileMode>
         </fileSet>

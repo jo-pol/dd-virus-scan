@@ -17,5 +17,5 @@
 
 echo -n "Pre-creating log..."
 TEMPDIR=data
-touch $TEMPDIR/dd-workflow-step-virus-scan.log
+touch $TEMPDIR/dd-virus-scan.log
 echo "OK"
